@@ -97,6 +97,10 @@ namespace Internal.ReadLine
 
         private void WriteChar(char c)
         {
+            // Only write if it's a printable character
+            if (char.IsControl(c))
+                return;
+
             if (IsEndOfLine())
             {
                 _text.Append(c);
@@ -295,6 +299,11 @@ namespace Internal.ReadLine
                 {
                     PreviousAutoComplete();
                 }
+            };
+
+            _keyActions["Escape"] = () =>
+            {
+                ClearLine();
             };
         }
 
